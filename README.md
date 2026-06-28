@@ -26,7 +26,7 @@ NDC坐标
 屏幕坐标(Screen Space)
 ```
 
-整个过程可以表示为：$$ P_{screen}=Projection\times View\times Model\times P $$
+整个过程可以表示为：$$ P_{screen}=Projection × View × Model × P $$
 
 由于本实验采用列向量，因此矩阵按照右乘顺序进行计算：
 
@@ -41,7 +41,9 @@ $$ MVP=M_{projection}\times M_{view}\times M_{model} $$
 
 设旋转角度为 θ，则旋转矩阵为：
 
-$$ R_z= \begin{bmatrix} \cos\theta&-\sin\theta&0&0\\ \sin\theta&\cos\theta&0&0\\ 0&0&1&0\\ 0&0&0&1 \end{bmatrix} $$
+$$ R_z= \begin{bmatrix} \cos\theta&-\sin\theta&0&0\
+\ \sin\theta&\cos\theta&0&0\\ 
+0&0&1&0\\ 0&0&0&1 \end{bmatrix} $$
 
 由于 Python 三角函数采用弧度，因此程序首先完成$$ \theta=\theta\times\frac{\pi}{180} $$
 
