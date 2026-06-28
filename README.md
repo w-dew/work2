@@ -26,11 +26,17 @@ NDC坐标
 屏幕坐标(Screen Space)
 ```
 
-整个过程可以表示为：$$ P_{screen}=Projection × View × Model × P $$
+整个过程可以表示为：
+
+$$
+P_{screen}=Projection \times View \times Model \times P
+$$
 
 由于本实验采用列向量，因此矩阵按照右乘顺序进行计算：
 
-$$ MVP=M_{projection}\times M_{view}\times M_{model} $$
+$$
+MVP=M_{projection}\times M_{view}\times M_{model}
+$$
 
 
 
@@ -41,11 +47,20 @@ $$ MVP=M_{projection}\times M_{view}\times M_{model} $$
 
 设旋转角度为 θ，则旋转矩阵为：
 
-$$ R_z= \begin{bmatrix} \cos\theta&-\sin\theta&0&0\
-\ \sin\theta&\cos\theta&0&0\\ 
-0&0&1&0\\ 0&0&0&1 \end{bmatrix} $$
+$$
+R_z=
+\begin{bmatrix}
+\cos\theta & -\sin\theta & 0 & 0\\
+\sin\theta & \cos\theta & 0 & 0\\
+0 & 0 & 1 & 0\\
+0 & 0 & 0 & 1
+\end{bmatrix}
+$$
 
-由于 Python 三角函数采用弧度，因此程序首先完成$$ \theta=\theta\times\frac{\pi}{180} $$
+由于 Python 三角函数采用弧度，因此程序首先完成
+$$
+\theta=\theta\times\frac{\pi}{180}
+$$
 
 随后利用
 
@@ -65,9 +80,27 @@ View Matrix 的作用是把摄像机移动到世界坐标原点。
 
 实验中摄像机位置为Eye=(0,0,5)
 
-因此需要把整个场景反方向移动：$$ T= \begin{bmatrix} 1&0&0&-x\\ 0&1&0&-y\\ 0&0&1&-z\\ 0&0&0&1 \end{bmatrix} $$
+因此需要把整个场景反方向移动：
+$$
+T=
+\begin{bmatrix}
+1&0&0&-x\\
+0&1&0&-y\\
+0&0&1&-z\\
+0&0&0&1
+\end{bmatrix}
+$$
 
-即$$ T= \begin{bmatrix} 1&0&0&0\\ 0&1&0&0\\ 0&0&1&-5\\ 0&0&0&1 \end{bmatrix} $$
+即
+$$
+T=
+\begin{bmatrix}
+1&0&0&0\\
+0&1&0&0\\
+0&0&1&-5\\
+0&0&0&1
+\end{bmatrix}
+$$
 
 经过该矩阵后，相机位于坐标原点。
 
@@ -78,13 +111,21 @@ View Matrix 的作用是把摄像机移动到世界坐标原点。
 
 首先根据视场角计算近平面的边界：
 
-$$ t=\tan\left(\frac{fov}{2}\right)|n| $$
+$$
+t=\tan\left(\frac{fov}{2}\right)|n|
+$$
 
-$$ b=−t $$
+$$
+b=-t
+$$
 
-$$ r=aspect×t $$
+$$
+r=aspect\_ratio\times t
+$$
 
-$$ l=−r $$
+$$
+l=-r
+$$
 
 实验采用
 
@@ -96,7 +137,15 @@ $$ l=−r $$
 随后按照实验要求，先完成
 
 ### 透视压缩矩阵
-$$ M_{persp\rightarrow ortho} = \begin{bmatrix} n&0&0&0\\ 0&n&0&0\\ 0&0&n+f&-nf\\ 0&0&1&0 \end{bmatrix} $$
+$$
+M_{persp\rightarrow ortho}=
+\begin{bmatrix}
+n&0&0&0\\
+0&n&0&0\\
+0&0&n+f&-nf\\
+0&0&1&0
+\end{bmatrix}
+$$
 
 作用是把视锥体压缩成长方体。
 
@@ -105,18 +154,51 @@ $$ M_{persp\rightarrow ortho} = \begin{bmatrix} n&0&0&0\\ 0&n&0&0\\ 0&0&n+f&-nf\
 ### 正交投影矩阵
 正交投影由平移矩阵和缩放矩阵组成：
 
-缩放：$$ S= \begin{bmatrix} \frac2{r-l}&0&0&0\\ 0&\frac2{t-b}&0&0\\ 0&0&\frac2{n-f}&0\\ 0&0&0&1 \end{bmatrix} $$
+缩放：
+$$
+S=
+\begin{bmatrix}
+\frac{2}{r-l}&0&0&0\\
+0&\frac{2}{t-b}&0&0\\
+0&0&\frac{2}{n-f}&0\\
+0&0&0&1
+\end{bmatrix}
+$$
 
-平移：$$ T= \begin{bmatrix} 1&0&0&-\frac{r+l}{2}\\ 0&1&0&-\frac{t+b}{2}\\ 0&0&1&-\frac{n+f}{2}\\ 0&0&0&1 \end{bmatrix} $$
+平移：
+$$
+T=
+\begin{bmatrix}
+1&0&0&-\frac{r+l}{2}\\
+0&1&0&-\frac{t+b}{2}\\
+0&0&1&-\frac{n+f}{2}\\
+0&0&0&1
+\end{bmatrix}
+$$
 
-最终得到：$$ M_{projection} = M_{ortho} \times M_{persp\rightarrow ortho} $$
+最终得到：
+$$
+M_{projection}=
+M_{ortho}
+\times
+M_{persp\rightarrow ortho}
+$$
 
 
 
 ## 透视除法
 经过 MVP 变换后，顶点变为(x,y,z,w)
 
-必须进行$$ (x',y',z') = \left( \frac{x}{w}, \frac{y}{w}, \frac{z}{w} \right) $$得到 NDC 坐标。
+进行
+$$
+(x',y',z')=
+\left(
+\frac{x}{w},
+\frac{y}{w},
+\frac{z}{w}
+\right)
+$$
+得到 NDC 坐标。
 
 程序中对应：
 
@@ -151,7 +233,16 @@ c = ti.cos(rad)
 s = ti.sin(rad)
 ```
 
-根据绕 Z 轴旋转矩阵的数学表达式构建四阶齐次矩阵：$$ M_{model}= \begin{bmatrix} \cos\theta &-\sin\theta&0&0\\ \sin\theta&\cos\theta&0&0\\ 0&0&1&0\\ 0&0&0&1 \end{bmatrix} $$
+根据绕 Z 轴旋转矩阵的数学表达式构建四阶齐次矩阵：
+$$
+M_{model}=
+\begin{bmatrix}
+\cos\theta&-\sin\theta&0&0\\
+\sin\theta&\cos\theta&0&0\\
+0&0&1&0\\
+0&0&0&1
+\end{bmatrix}
+$$
 
 代码如下：
 
@@ -186,9 +277,22 @@ return ti.Matrix([
 ])
 ```
 
-对应的视图矩阵为：$$ M_{view}= \begin{bmatrix} 1&0&0&-x_e\\ 0&1&0&-y_e\\ 0&0&1&-z_e\\ 0&0&0&1 \end{bmatrix} $$
+对应的视图矩阵为：
+$$
+M_{view}=
+\begin{bmatrix}
+1&0&0&-x_e\\
+0&1&0&-y_e\\
+0&0&1&-z_e\\
+0&0&0&1
+\end{bmatrix}
+$$
 
-其中$$ (x_e,y_e,z_e)=(0,0,5) $$
+其中
+
+$$
+(x_e,y_e,z_e)=(0,0,5)
+$$
 
 
 
@@ -234,10 +338,23 @@ M_p2o = ti.Matrix([
 ])
 ```
 
-对应数学表达式为：$$ M_{persp\rightarrow ortho}= \begin{bmatrix} n&0&0&0\\ 0&n&0&0\\ 0&0&n+f&-nf\\ 0&0&1&0 \end{bmatrix} $$
+对应数学表达式为：
+$$
+M_{persp\rightarrow ortho}=
+\begin{bmatrix}
+n&0&0&0\\
+0&n&0&0\\
+0&0&n+f&-nf\\
+0&0&1&0
+\end{bmatrix}
+$$
 
 ### 构造正交投影矩阵
-完成透视压缩后，将长方体缩放并平移到标准立方体 $$ [-1,1]^3 $$。
+完成透视压缩后，将长方体缩放并平移到标准立方体
+$$
+[-1,1]^3
+$$
+。
 
 分别构造缩放矩阵和平移矩阵M_ortho_scale，负责完成各坐标轴方向的归一化：
 
@@ -253,7 +370,13 @@ M_p2o = ti.Matrix([
 
 整个投影矩阵为：return M_ortho @ M_p2o
 
-即$$ M_{projection} = M_{ortho} M_{persp\rightarrow ortho} $$
+即
+$$
+M_{projection}=
+M_{ortho}
+\times
+M_{persp\rightarrow ortho}
+$$
 
 
 
