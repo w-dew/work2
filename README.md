@@ -155,6 +155,7 @@ $$
 正交投影由平移矩阵和缩放矩阵组成：
 
 缩放：
+
 $$
 S=
 \begin{bmatrix}
@@ -166,6 +167,7 @@ S=
 $$
 
 平移：
+
 $$
 T=
 \begin{bmatrix}
@@ -177,6 +179,7 @@ T=
 $$
 
 最终得到：
+
 $$
 M_{projection}=
 M_{ortho}
@@ -190,6 +193,7 @@ $$
 经过 MVP 变换后，顶点变为(x,y,z,w)
 
 进行
+
 $$
 (x',y',z')=
 \left(
@@ -198,6 +202,7 @@ $$
 \frac{z}{w}
 \right)
 $$
+
 得到 NDC 坐标。
 
 程序中对应：
@@ -234,6 +239,7 @@ s = ti.sin(rad)
 ```
 
 根据绕 Z 轴旋转矩阵的数学表达式构建四阶齐次矩阵：
+
 $$
 M_{model}=
 \begin{bmatrix}
@@ -278,6 +284,7 @@ return ti.Matrix([
 ```
 
 对应的视图矩阵为：
+
 $$
 M_{view}=
 \begin{bmatrix}
@@ -339,6 +346,7 @@ M_p2o = ti.Matrix([
 ```
 
 对应数学表达式为：
+
 $$
 M_{persp\rightarrow ortho}=
 \begin{bmatrix}
@@ -351,6 +359,7 @@ $$
 
 ### 构造正交投影矩阵
 完成透视压缩后，将长方体缩放并平移到标准立方体
+
 $$
 [-1,1]^3
 $$
@@ -371,6 +380,7 @@ $$
 整个投影矩阵为：return M_ortho @ M_p2o
 
 即
+
 $$
 M_{projection}=
 M_{ortho}
