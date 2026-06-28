@@ -58,6 +58,7 @@ R_z=
 $$
 
 由于 Python 三角函数采用弧度，因此程序首先完成
+
 $$
 \theta=\theta\times\frac{\pi}{180}
 $$
@@ -81,6 +82,7 @@ View Matrix 的作用是把摄像机移动到世界坐标原点。
 实验中摄像机位置为Eye=(0,0,5)
 
 因此需要把整个场景反方向移动：
+
 $$
 T=
 \begin{bmatrix}
@@ -92,6 +94,7 @@ T=
 $$
 
 即
+
 $$
 T=
 \begin{bmatrix}
@@ -137,6 +140,7 @@ $$
 随后按照实验要求，先完成
 
 ### 透视压缩矩阵
+
 $$
 M_{persp\rightarrow ortho}=
 \begin{bmatrix}
