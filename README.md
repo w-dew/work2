@@ -26,7 +26,8 @@ NDC坐标
 屏幕坐标(Screen Space)
 ```
 
-整个过程可以表示为：$$ {P}_{screen}=Projection\times View\times Model\times \mathbf{P} $$
+整个过程可以表示为：
+$$ {P}_{screen}=Projection\times View\times Model\times \mathbf{P} $$
 
 由于本实验采用列向量，因此矩阵按照右乘顺序进行计算：
 
@@ -41,9 +42,10 @@ $$ MVP=M_{projection}\times M_{view}\times M_{model} $$
 
 设旋转角度为 θ，则旋转矩阵为：
 
-$ R_z= \begin{bmatrix} \cos\theta&-\sin\theta&0&0\\ \sin\theta&\cos\theta&0&0\\ 0&0&1&0\\ 0&0&0&1 \end{bmatrix} $
+$$ R_z= \begin{bmatrix} \cos\theta&-\sin\theta&0&0\\ \sin\theta&\cos\theta&0&0\\ 0&0&1&0\\ 0&0&0&1 \end{bmatrix} &$
 
-由于 Python 三角函数采用弧度，因此程序首先完成$ \theta=\theta\times\frac{\pi}{180} $
+由于 Python 三角函数采用弧度，因此程序首先完成
+$$ \theta=\theta\times\frac{\pi}{180} $$
 
 随后利用
 
@@ -63,7 +65,8 @@ View Matrix 的作用是把摄像机移动到世界坐标原点。
 
 实验中摄像机位置为Eye=(0,0,5)
 
-因此需要把整个场景反方向移动：$ T= \begin{bmatrix} 1&0&0&-x\\ 0&1&0&-y\\ 0&0&1&-z\\ 0&0&0&1 \end{bmatrix} $
+因此需要把整个场景反方向移动：
+$ T= \begin{bmatrix} 1&0&0&-x\\ 0&1&0&-y\\ 0&0&1&-z\\ 0&0&0&1 \end{bmatrix} $
 
 即$ T= \begin{bmatrix} 1&0&0&0\\ 0&1&0&0\\ 0&0&1&-5\\ 0&0&0&1 \end{bmatrix} $
 
