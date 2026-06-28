@@ -26,11 +26,11 @@ NDC坐标
 屏幕坐标(Screen Space)
 ```
 
-整个过程可以表示为：$ {P}_{screen}=Projection\times View\times Model\times \mathbf{P} $
+整个过程可以表示为：$$ {P}_{screen}=Projection\times View\times Model\times \mathbf{P} $$
 
 由于本实验采用列向量，因此矩阵按照右乘顺序进行计算：
 
-$ MVP=M_{projection}\times M_{view}\times M_{model} $
+$$ MVP=M_{projection}\times M_{view}\times M_{model} $$
 
 
 
